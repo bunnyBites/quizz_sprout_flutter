@@ -51,42 +51,31 @@ class _QuizPageState extends State<QuizPage> {
             ),
           ),
         ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: TextButton(
-              child: const Text(
-                'True',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20.0,
-                ),
-              ),
-              onPressed: () {
-                //The user picked true.
-              },
-            ),
-          ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: TextButton(
-              child: const Text(
-                'False',
-                style: TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.white,
-                ),
-              ),
-              onPressed: () {
-                //The user picked false.
-              },
-            ),
-          ),
-        ),
+        choiceButton("True", Colors.green),
+        choiceButton("False", Colors.red),
         //TODO: Add a Row here as your score keeper
       ],
+    );
+  }
+
+  Expanded choiceButton(String buttonLabel, Color color) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: TextButton(
+          style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(color)),
+          child: Text(
+            buttonLabel,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 20.0,
+            ),
+          ),
+          onPressed: () {
+            //The user picked true.
+          },
+        ),
+      ),
     );
   }
 }
