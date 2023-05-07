@@ -1,7 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:quizz_sprout_flutter/question_bank.dart';
 
+QuestionBank questionBank = QuestionBank();
 void main() => runApp(const Quizzler());
 
 class Quizzler extends StatelessWidget {
@@ -32,11 +32,6 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   List<Icon> iconList = [];
-  List<String> quitionare = [
-    'You can lead a cow down stairs but not up stairs.',
-    'Approximately one quarter of human bones are in the feet.',
-    "A slug's blood is green.",
-  ];
 
   int currentStep = 0;
 
@@ -52,7 +47,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: const EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                quitionare[currentStep],
+                questionBank.questionare[currentStep].questionName,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 25.0,
@@ -86,13 +81,13 @@ class _QuizPageState extends State<QuizPage> {
           ),
           onPressed: () {
             //The user picked true.
-            if (currentStep > 2) return;
-
             setState(() {
               currentStep += 1;
             });
 
-            if (buttonLabel == "True") {
+            bool correctAnswer = questionBank.questionare[currentStep].correctAnswer;
+
+            if (buttonLabel == "True" && correctAnswer) {
               setState(() {
                 iconList.add(const Icon(
                   Icons.check,
