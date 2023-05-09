@@ -60,8 +60,6 @@ class _QuizPageState extends State<QuizPage> {
         ),
         choiceButton("True", Colors.green),
         choiceButton("False", Colors.red),
-
-        //TODO: Add a Row here as your score keeper
         Row(children: iconList)
       ],
     );
