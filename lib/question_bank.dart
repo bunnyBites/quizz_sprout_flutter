@@ -1,7 +1,7 @@
 import 'package:quizz_sprout_flutter/questionare.dart';
 
 class QuestionBank {
-  List<Questionare> questionare = [
+  final List<Questionare> _questionare = [
     Questionare('Some cats are actually allergic to humans', true),
     Questionare('You can lead a cow down stairs but not up stairs.', false),
     Questionare('Approximately one quarter of human bones are in the feet.', true),
@@ -28,4 +28,12 @@ class QuestionBank {
         'In West Virginia, USA, if you accidentally hit an animal with your car, you are free to take it home to eat.',
         true),
   ];
+
+  String getQuestionNameByQuestionNumber(int questionNumber) {
+    return _questionare[questionNumber].questionName;
+  }
+
+  bool getCorrectAnswerByQuestionNumber(int questionNumber) {
+    return _questionare[questionNumber].correctAnswer;
+  }
 }

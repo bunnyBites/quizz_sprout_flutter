@@ -47,7 +47,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: const EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                questionBank.questionare[currentStep].questionName,
+                questionBank.getQuestionNameByQuestionNumber(currentStep),
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 25.0,
@@ -85,7 +85,7 @@ class _QuizPageState extends State<QuizPage> {
               currentStep += 1;
             });
 
-            bool correctAnswer = questionBank.questionare[currentStep].correctAnswer;
+            bool correctAnswer = questionBank.getCorrectAnswerByQuestionNumber(currentStep);
 
             if (buttonLabel == "True" && correctAnswer) {
               setState(() {
