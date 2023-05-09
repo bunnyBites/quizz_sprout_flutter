@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizz_sprout_flutter/question_bank.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 QuestionBank questionBank = QuestionBank();
 void main() => runApp(const Quizzler());
@@ -33,7 +34,7 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   List<Icon> iconList = [];
 
-  int currentStep = 0;
+  void onReset() {}
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: const EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                questionBank.getQuestionNameByQuestionNumber(currentStep),
+                questionBank.getQuestionNameByQuestionNumber(),
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 25.0,
@@ -80,12 +81,19 @@ class _QuizPageState extends State<QuizPage> {
             ),
           ),
           onPressed: () {
+            // current question number
+            if (questionBank.isCurrentQuestionLast()) {
+              showAlert().show();
+              return;
+            }
+
             //The user picked true.
             setState(() {
-              currentStep += 1;
+              questionBank.onNextQuestion();
             });
 
-            bool correctAnswer = questionBank.getCorrectAnswerByQuestionNumber(currentStep);
+            bool correctAnswer =
+                questionBank.getCorrectAnswerByQuestionNumber();
 
             if (buttonLabel == "True" && correctAnswer) {
               setState(() {
@@ -107,10 +115,31 @@ class _QuizPageState extends State<QuizPage> {
       ),
     );
   }
-}
 
-/*
-question1: , false,
-question2: 'Approximately one quarter of human bones are in the feet.', true,
-question3: 'A slug\'s blood is green.', true,
-*/
+  Alert showAlert() {
+    void reset() {
+      setState(() {
+        questionBank.onReset();
+        iconList.clear();
+      });
+
+      Navigator.pop(context);
+    }
+
+    return Alert(
+        context: context,
+        title: "Good Job!",
+        desc: "You have completed the quiz",
+        buttons: [
+          DialogButton(
+            onPressed: reset,
+            width: 120,
+            child: const Text(
+              "Reset",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+          )
+        ],
+        closeFunction: reset);
+  }
+}

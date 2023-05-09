@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:quizz_sprout_flutter/questionare.dart';
 
 class QuestionBank {
+  int _questionNumber = 0;
+
   final List<Questionare> _questionare = [
     Questionare('Some cats are actually allergic to humans', true),
     Questionare('You can lead a cow down stairs but not up stairs.', false),
@@ -29,11 +32,21 @@ class QuestionBank {
         true),
   ];
 
-  String getQuestionNameByQuestionNumber(int questionNumber) {
-    return _questionare[questionNumber].questionName;
+  void onReset() { _questionNumber = 0; }
+
+  bool isCurrentQuestionLast() { return  _questionNumber == _questionare.length - 1; }
+
+  void onNextQuestion() {
+    if (_questionNumber < _questionare.length - 1) {
+      _questionNumber++;
+    }
   }
 
-  bool getCorrectAnswerByQuestionNumber(int questionNumber) {
-    return _questionare[questionNumber].correctAnswer;
+  String getQuestionNameByQuestionNumber() {
+    return _questionare[_questionNumber].questionName;
+  }
+
+  bool getCorrectAnswerByQuestionNumber() {
+    return _questionare[_questionNumber].correctAnswer;
   }
 }
